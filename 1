@@ -1,0 +1,148 @@
+battle_accept = str(input("Old Man: Fufufufu!\nOld Man: So you've come to challenge me to a pokemon battle?\n").lower())
+
+if battle_accept == 'yes':
+    print("Old Man: Very well. Let us begin!\n")
+elif battle_accept == 'no':
+    print("Old Man: Too bad!")
+    exit()
+else:
+    print("Old Man: Huh?")
+    battle_accept = str(input("Old Man: So you've come to challenge me to a pokemon battle?\n").lower())
+
+player_lp = 3
+opponent_lp = 3
+pro_moves = 0
+
+charizard_LP = 6
+venusaur_LP = 6
+blastoise_LP = 6
+gyarados_LP = 3
+arcanine_LP = 3
+raichu_LP = 3
+
+available_pokemon = ["Charizard", "Venusaur", "Blastoise"]
+
+charizard_faint = False
+venusaur_faint = False
+blastoise_faint = False
+
+while True:
+
+    print(available_pokemon)
+    prompt1 = str(input("Who do you choose?\n")).lower()
+
+    if prompt1 == "charizard" and available_pokemon.count('Charizard'):
+        print("\nOld Man: So, Charizard is your choice? Then I will battle with Gyarados. Go, Gyarados!\n")
+    elif prompt1 == "venusaur" and available_pokemon.count('Venusaur'):
+        print("\nOld Man: So, Venusaur is your choice? Then I will battle with Arcanine. Go, Arcanine!\n")
+    elif prompt1 == "blastoise" and available_pokemon.count('Blastoise'):
+        print("\nOld Man: So, Blastoise is your choice? Then I will battle with Raichu. Go, Raichu!\n")
+
+    while prompt1 == 'charizard' and player_lp > 0:
+        charizard_move = input("What move should Charizard use?\n\nFlamethrower\nWing Attack\nMetal Claw\nSlash\n").lower()
+        if charizard_move == 'flamethrower':
+            charizard_LP += -1
+            print("\nCharizard uses Flamethrower!")
+        elif charizard_move == 'wing attack':
+            gyarados_LP += -1
+            print("\nCharizard uses Wing Attack!")
+        elif charizard_move == 'metal claw':
+            charizard_LP += -1
+            gyarados_LP += -1
+            print("\nCharizard uses Metal Claw!")
+        elif charizard_move == 'slash':
+            charizard_LP += -1
+            gyarados_LP += -1
+            print("\nCharizard uses Slash!")
+
+        if charizard_LP <= 0 and available_pokemon.count('Charizard'):
+            available_pokemon.remove('Charizard')
+            print("Charizard fainted!\n")
+            charizard_faint = True
+            player_lp += -1
+            break
+        elif gyarados_LP <= 0 and available_pokemon.count('Charizard'):
+            available_pokemon.remove('Charizard')
+            print("\nGyarados fainted!\nOld man: Bah!\n\nCharizard, exhausted, returns to the pokeball\n")
+            charizard_faint = True
+            opponent_lp += -1
+            break
+        else:
+            print("Gyarados hits Charizard with a powerful Hydro Pump\n")
+            charizard_LP += -1
+
+    while prompt1 == 'venusaur' and player_lp > 0:
+        venusaur_move = input("What move should Venusaur use?\n\nStomp\nVine Whip\nSolarbeam\nGiga Drain\n").lower()
+        if venusaur_move == 'stomp':
+            venusaur_LP += -1
+            arcanine_LP += -1
+            print("\nVenusaur used Stomp!")
+        elif venusaur_move == 'vine whip':
+            arcanine_LP += -1
+            print("\nVenusaur used Vine Whip")
+        elif venusaur_move == 'solarbeam':
+            venusaur_LP += -1
+            arcanine_LP += -2
+            print("\nVenusaur used Solarbeam!")
+        elif venusaur_move == 'giga drain':
+            venusaur_LP += 1
+            arcanine_LP += -1
+            print("\nVenusaur used Giga Drain!")
+
+        if venusaur_LP <= 0 and available_pokemon.count('Venusaur'):
+            available_pokemon.remove('Venusaur')
+            print("Venusaur fainted!\n")
+            venusaur_faint = True
+            player_lp += -1
+            break
+        elif arcanine_LP <= 0 and available_pokemon.count('Venusaur'):
+            available_pokemon.remove('Venusaur')
+            print("\nArcanine fainted!\nOld man: Harumph!\n\nVenusaur, exhausted, returns to the pokeball\n")
+            venusaur_faint = True
+            opponent_lp += -1
+            break
+        else:
+            print("Arcanine hits Venusaur with a powerful Fire Blast!\n")
+            venusaur_LP += -1
+
+    while prompt1 == 'blastoise' and player_lp > 0:
+        blastoise_move = input("What move should Blastoise use?\n\nWithdraw\nHydro Pump\nStrength\nIce Beam\n").lower()
+        if blastoise_move == 'withdraw':
+            blastoise_LP += 1
+            print("\nBlastoise used Withdraw!")
+        elif blastoise_move == 'hydro pump':
+            blastoise_LP += -1
+            raichu_LP += -1
+            print("\nBlastoise used Hydro Pump!")
+        elif blastoise_move == 'strength':
+            blastoise_LP += -1
+            raichu_LP += -1
+            print("\nBlastoise used Strength!")
+        elif blastoise_move == 'ice beam':
+            blastoise_LP += 1
+            raichu_LP += -2
+            print("\nBlastoise used Ice Beam!")
+
+        if blastoise_LP <= 0 and available_pokemon.count('Blastoise'):
+            available_pokemon.remove('Blastoise')
+            print("Blastoise fainted!\n")
+            blastoise_faint = True
+            player_lp += -1
+            break
+        elif raichu_LP <= 0 and available_pokemon.count('Blastoise'):
+            available_pokemon.remove('Blastoise')
+            print("\nRaichu fainted!\nOld man: Argh!\n\nBlastoise, exhausted, returns to the pokeball\n")
+            blastoise_faint = True
+            opponent_lp += -1
+            break
+        elif player_lp >= 0:
+            print("Raichu hits Blastoise with a powerful Thunderbolt!\n")
+            blastoise_LP += -1
+
+    if not available_pokemon:
+        if player_lp > opponent_lp:
+            print("Old man: Enough! You win!\nYou are truly a Pokemon master!")
+            exit()
+        elif player_lp < opponent_lp:
+            print("You are out of usable Pokemon!\n\nOld man: I win!\nBetter luck next time!")
+            exit()
